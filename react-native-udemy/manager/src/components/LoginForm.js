@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChange } from '../actions';
+import { emailChanged, passwordChange, loginUser } from '../actions';
 import { View, Form, Item, Label, Input, Button, Text } from 'native-base';
 
 class LoginForm extends Component {
@@ -11,6 +11,11 @@ class LoginForm extends Component {
 
   _onSenhaChange(text) {
     this.props.passwordChange(text);
+  }
+
+  _onLoginButtonPress() {
+    const { email, senha, loginUser } = this.props;
+    loginUser({ email, senha });
   }
 
   render() {
@@ -36,7 +41,7 @@ class LoginForm extends Component {
           />
         </Item>
         <View style={{ alignSelf: 'center' }}>
-          <Button style={{ marginVertical: 10 }} small>
+          <Button style={{ marginVertical: 10 }} small onPress={this._onLoginButtonPress.bind(this)}>
             <Text>Log in</Text>
           </Button>
         </View>
@@ -52,4 +57,6 @@ const mapStateToProps = ({ login }) => (
   }
 );
 
-export default connect(mapStateToProps, { emailChanged, passwordChange })(LoginForm);
+export default connect(mapStateToProps,
+  { emailChanged, passwordChange, loginUser }
+)(LoginForm);
