@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChange, loginUser } from '../actions';
-import { View, Form, Item, Label, Input, Button, Text } from 'native-base';
+import { View, Form, Item, Label, Input, Button, Text, Spinner } from 'native-base';
 
 class LoginForm extends Component {
 
@@ -18,7 +18,7 @@ class LoginForm extends Component {
     loginUser({ email, senha });
   }
 
-  renderError() {
+  _renderError() {
     const { error } = this.props;
 
     if (error) {
@@ -28,6 +28,18 @@ class LoginForm extends Component {
         </View>
       );
     }
+  }
+
+  _renderButton() {
+    if (this.props.loading) {
+      return <Spinner size='small' color='blue' />
+    }
+
+    return (
+      <Button style={{ marginVertical: 10 }} small onPress={this._onLoginButtonPress.bind(this)}>
+        <Text>Log in</Text>
+      </Button>
+    );
   }
 
   render() {
@@ -52,11 +64,9 @@ class LoginForm extends Component {
             onChangeText={this._onSenhaChange.bind(this)}
           />
         </Item>
-        {this.renderError()}
+        {this._renderError()}
         <View style={{ alignSelf: 'center' }}>
-          <Button style={{ marginVertical: 10 }} small onPress={this._onLoginButtonPress.bind(this)}>
-            <Text>Log in</Text>
-          </Button>
+          {this._renderButton()}
         </View>
       </Form>
     );
@@ -64,12 +74,13 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = ({ login }) => {
-  const { email, senha, error } = login;
+  const { email, senha, error, loading } = login;
 
   return {
     email,
     senha,
-    error
+    error,
+    loading
   };
 };
 
