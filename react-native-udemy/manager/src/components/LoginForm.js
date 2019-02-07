@@ -18,6 +18,18 @@ class LoginForm extends Component {
     loginUser({ email, senha });
   }
 
+  renderError() {
+    const { error } = this.props;
+
+    if (error) {
+      return (
+        <View>
+          <Text style={{ color: 'red', alignSelf: 'center', paddingTop: 10 }}>{error}</Text>
+        </View>
+      );
+    }
+  }
+
   render() {
     const { email, senha } = this.props;
     return (
@@ -40,6 +52,7 @@ class LoginForm extends Component {
             onChangeText={this._onSenhaChange.bind(this)}
           />
         </Item>
+        {this.renderError()}
         <View style={{ alignSelf: 'center' }}>
           <Button style={{ marginVertical: 10 }} small onPress={this._onLoginButtonPress.bind(this)}>
             <Text>Log in</Text>
@@ -50,12 +63,15 @@ class LoginForm extends Component {
   }
 }
 
-const mapStateToProps = ({ login }) => (
-  {
-    email: login.email,
-    senha: login.senha
-  }
-);
+const mapStateToProps = ({ login }) => {
+  const { email, senha, error } = login;
+
+  return {
+    email,
+    senha,
+    error
+  };
+};
 
 export default connect(mapStateToProps,
   { emailChanged, passwordChange, loginUser }
