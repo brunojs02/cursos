@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "client": "webpack-dev-server --devtool inline-source-map --hot --config webpack.client.config.js"
+    "start": "webpack-dev-server --devtool inline-source-map --hot --config webpack.client.config.js"
   },
   "dependencies": {
     "react": "^16.13.1",
