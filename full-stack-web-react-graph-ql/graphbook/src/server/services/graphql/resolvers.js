@@ -21,8 +21,19 @@ const posts = [
 
 const resolvers = {
   RootQuery: {
-    posts(root, args, context) {
+    posts() {
       return posts;
+    }
+  },
+  RootMutation: {
+    addPost(_, { post, user }) {
+      const postObject = {
+        ...post,
+        user,
+        id: posts.length + 1
+      };
+      posts.push(postObject);
+      return postObject;
     }
   }
 };
