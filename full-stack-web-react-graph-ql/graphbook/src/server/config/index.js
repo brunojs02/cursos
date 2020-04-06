@@ -1,6 +1,6 @@
 module.exports = {
   development: {
     dialect: "sqlite",
-    storage: "../graphbook.db",
+    storage: "./src/server/graphbook.db",
   },
 };
