@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import models from "../models";
 import configFile from "../config";
 
 const env = process.env.NODE_ENV || "development";
@@ -9,4 +10,9 @@ const sequelize = new Sequelize({
   storage: config.storage,
 });
 
-export default sequelize;
+const db = {
+  models: sequelize(models),
+  sequelize,
+};
+
+export default db;
